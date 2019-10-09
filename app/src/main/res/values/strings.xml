@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">revolut</string>
+    <string name="rates">Rates</string>
 </resources>

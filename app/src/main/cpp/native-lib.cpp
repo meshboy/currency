@@ -2,9 +2,9 @@
 #include <string>
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_ex_revolut_MainActivity_stringFromJNI(
+Java_com_ex_revolut_MainActivity_getBaseApiUrl(
         JNIEnv *env,
         jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    std::string apiUrl = "https://revolut.duckdns.org";
+    return env->NewStringUTF(apiUrl.c_str());
 }
