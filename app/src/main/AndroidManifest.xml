@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ex.revolut">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +16,7 @@
         android:label="${appName}"
         tools:ignore="GoogleAppIndexingWarning,RtlEnabled"
         tools:targetApi="donut">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.ex.revolut.rate.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

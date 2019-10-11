@@ -1,6 +1,9 @@
 package com
 
 import android.app.Application
+import com.ex.revolut.core.di.modules.database.databaseModule
+import com.ex.revolut.core.di.modules.network.networkModule
+import com.ex.revolut.core.di.modules.views.mainModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -13,6 +16,9 @@ import timber.log.Timber
 class BaseApplication : Application(), KodeinAware {
     override val kodein: Kodein = Kodein.lazy {
         import(androidXModule(this@BaseApplication))
+        import(networkModule)
+        import(databaseModule)
+        import(mainModule)
     }
 
     override fun onCreate() {
