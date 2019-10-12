@@ -1,7 +1,6 @@
 package com.ex.revolut.core.data.rate.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.ex.revolut.core.data.rate.dto.RateDto
 import com.ex.revolut.core.data.rate.entities.DatabaseRate
 import com.ex.revolut.core.data.rate.entities.RateDao
@@ -42,7 +41,7 @@ class RateRepositoryImpl(
         }
     }
 
-    override suspend fun fetchLocalRates(): LiveData<List<DatabaseRate>> {
+    override suspend fun fetchLocalRates(): List<DatabaseRate> {
         return rateDao.getRatesByBase()
     }
 

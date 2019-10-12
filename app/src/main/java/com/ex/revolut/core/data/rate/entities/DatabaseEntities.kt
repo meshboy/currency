@@ -10,11 +10,12 @@ import com.ex.revolut.core.data.rate.domain.RateModel
  */
 @Entity(tableName = "rates")
 data class DatabaseRate(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 1,
     val currency: String,
     val rate: String
-)
+){
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}
 
 //cache  the most recent base currency the user selected, the default is EUR
 @Entity(tableName = "base_currency")

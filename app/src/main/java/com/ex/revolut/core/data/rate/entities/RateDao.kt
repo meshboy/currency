@@ -14,7 +14,7 @@ import androidx.room.Query
 interface RateDao {
 
     @Query("SELECT * FROM rates")
-    fun getRatesByBase(): LiveData<List<DatabaseRate>>
+    fun getRatesByBase(): List<DatabaseRate>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg databaseRate: DatabaseRate)

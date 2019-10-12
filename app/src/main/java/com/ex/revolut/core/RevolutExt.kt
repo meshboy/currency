@@ -2,6 +2,7 @@ package com.ex.revolut.core
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.view.View
 
 /**
  *@author meshileya seun <mesh@kudi.ai/>
@@ -16,4 +17,17 @@ fun isConnected(context: Context): Boolean {
     isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting
 
     return isConnected
+}
+
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide(isGone: Boolean = true) {
+    visibility = if (isGone) {
+        View.GONE
+    } else {
+        View.INVISIBLE
+    }
 }

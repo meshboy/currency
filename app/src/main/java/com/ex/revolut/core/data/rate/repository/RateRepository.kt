@@ -1,6 +1,5 @@
 package com.ex.revolut.core.data.rate.repository
 
-import androidx.lifecycle.LiveData
 import com.ex.revolut.core.data.database.Repository
 import com.ex.revolut.core.data.rate.dto.RateDto
 import com.ex.revolut.core.data.rate.entities.DatabaseRate
@@ -11,5 +10,5 @@ import com.ex.revolut.core.data.rate.entities.DatabaseRate
  */
 interface RateRepository : Repository<DatabaseRate> {
     suspend fun fetchRemoteRates(base: String): RateDto?
-    suspend fun fetchLocalRates(): LiveData<List<DatabaseRate>>
+    suspend fun fetchLocalRates(): List<DatabaseRate>
 }

@@ -3,6 +3,7 @@ package com.ex.revolut.core.data.rate.dto
 import com.ex.revolut.core.data.rate.domain.RateModel
 import com.ex.revolut.core.data.rate.entities.DatabaseRate
 import com.squareup.moshi.JsonClass
+import timber.log.Timber
 
 /**
  *@author meshileya seun <mesh@kudi.ai/>

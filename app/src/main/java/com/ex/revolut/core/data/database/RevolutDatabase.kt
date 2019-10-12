@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ex.revolut.core.data.rate.entities.BaseCurrencyDao
 import com.ex.revolut.core.data.rate.entities.DatabaseBaseCurrencyRate
 import com.ex.revolut.core.data.rate.entities.DatabaseRate
 import com.ex.revolut.core.data.rate.entities.RateDao
+import java.util.concurrent.Executors
 
 /**
  *@author meshileya seun <mesh@kudi.ai/>
@@ -28,6 +30,7 @@ abstract class RevolutDatabase : RoomDatabase() {
 
     companion object {
         private lateinit var INSTANCE: RevolutDatabase
+        private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
 
         fun getDatabase(context: Context): RevolutDatabase {
             synchronized(RevolutDatabase::class.java) {
@@ -43,6 +46,29 @@ abstract class RevolutDatabase : RoomDatabase() {
                 context.applicationContext,
                 RevolutDatabase::class.java,
                 "revolut"
-            ).build()
+            ).addCallback(populateBaseCurrency(context)).build()
+
+        /**
+         * set the default base currency to EUR (Euros)
+         * This will fetch
+         */
+        private fun populateBaseCurrency(context: Context): Callback {
+
+            return object : Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+
+                    ioThread {
+                        getDatabase(context = context).baseCurrencyDao.insert(
+                            DatabaseBaseCurrencyRate(recentBase = "EUR")
+                        )
+                    }
+                }
+            }
+        }
+
+        fun ioThread(f: () -> Unit) {
+            IO_EXECUTOR.execute(f)
+        }
     }
 }
