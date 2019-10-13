@@ -1,11 +1,15 @@
 package com.ex.revolut.rate.adapter
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ex.revolut.R
 import com.ex.revolut.core.data.rate.domain.RateModel
 import com.ex.revolut.databinding.ContentRateListBinding
 
@@ -13,14 +17,18 @@ import com.ex.revolut.databinding.ContentRateListBinding
  *@author meshileya seun <mesh@kudi.ai/>
  *@date 2019-10-12
  */
-class RateAdapter  : ListAdapter<RateModel, RateAdapter.RateViewHolder>(DiffCallback) {
+class RateAdapter : ListAdapter<RateModel, RateAdapter.RateViewHolder>(DiffCallback) {
 
-    lateinit var onClickListener: OnClickListener
+    private lateinit var onClickListener: OnClickListener
+    private lateinit var onTextChangedListener: OnTextChanedListener
 
     fun setListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }
 
+    fun setTextChangeListener(onTextChangedListener: OnTextChanedListener) {
+        this.onTextChangedListener = onTextChangedListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RateViewHolder {
         return RateViewHolder.from(parent)
@@ -32,10 +40,21 @@ class RateAdapter  : ListAdapter<RateModel, RateAdapter.RateViewHolder>(DiffCall
 
         holder.setListener {
             onClickListener.onClick(rateModel)
+
+            val editText: EditText = it.findViewById(R.id.rateEditText)
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {}
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(character: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    onTextChangedListener.onChange(character)
+                }
+            })
         }
     }
 
-    class RateViewHolder(private val binding: ContentRateListBinding) :
+    class RateViewHolder(val binding: ContentRateListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(RateModel: RateModel) {
@@ -70,7 +89,11 @@ class RateAdapter  : ListAdapter<RateModel, RateAdapter.RateViewHolder>(DiffCall
         }
     }
 
+    class OnTextChanedListener(val onTextChangedListener: (value: CharSequence?) -> Unit) {
+        fun onChange(value: CharSequence?) = onTextChangedListener(value)
+    }
+
     class OnClickListener(val clickListener: (RateModel: RateModel) -> Unit) {
-        fun onClick(RateModel: RateModel) = clickListener(RateModel)
+        fun onClick(rateModel: RateModel) = clickListener(rateModel)
     }
 }

@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ex.revolut.R
 import com.ex.revolut.core.data.rate.domain.RateModel
+import java.text.NumberFormat
 import java.util.*
 
 /**
@@ -25,7 +26,7 @@ fun TextView.setCurrencyDesc(model: RateModel) {
 
 @BindingAdapter("rate")
 fun EditText.setRate(model: RateModel) {
-    setText("${model.rate}")
+    setText(NumberFormat.getInstance().format(model.rate))
 }
 
 @BindingAdapter("currencyImage")
@@ -40,16 +41,6 @@ fun ImageView.setImage(model: RateModel) {
         }
     )
 }
-
-//@BindingAdapter("rateDataList")
-//fun RecyclerView.setRateDataList(data: List<RateModel>?) {
-//    data?.let {
-//        val adapter = adapter as RateAdapter
-////        adapter.onClickListener
-//        adapter.submitList(it)
-//    }
-//}
-
 
 fun getCurrencyDesc(currency: String): String {
     val currencyInstance = Currency.getInstance(currency)

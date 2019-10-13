@@ -120,8 +120,9 @@ dependencies {
 
     // test
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'org.mockito:mockito-core:2.24.5'
+    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.5'
     implementation 'androidx.browser:browser:1.0.0'

@@ -2,4 +2,5 @@
     <string name="app_name">revolut</string>
     <string name="rates">Rates</string>
     <string name="currency_image">Currency Image</string>
+    <string name="zero">0</string>
 </resources>

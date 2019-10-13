@@ -37,7 +37,6 @@ class MainViewModel(
      * update successful fetched rate in the db alongside with the base currency
      */
     fun fetchRates(baseCurrency: String) {
-        Timber.d("base  currency %s", baseCurrency)
         coroutineScope.launch {
             showLoading()
 
@@ -53,7 +52,6 @@ class MainViewModel(
                 rates.value = rateDto.asDomainModel()
                 saveRates(rateDto.asDomainModel())
             }
-
 //            hide loading if its still showing
             hideLoading()
         }
@@ -71,7 +69,7 @@ class MainViewModel(
         }
     }
 
-    fun saveBaseCurrency(currency: String){
+    fun saveBaseCurrency(currency: String) {
         coroutineScope.launch {
             saveRecentBaseCurrency(currency)
         }
@@ -93,12 +91,25 @@ class MainViewModel(
         }
     }
 
+    fun downloadAndUpdate () {
+        coroutineScope.launch {
+            downloadAndUpdateInBackground()
+        }
+    }
 
-    fun showLoading() {
+    private suspend fun downloadAndUpdateInBackground() = withContext(Dispatchers.IO){
+        val rateDto = rateRepository.fetchRemoteRates(baseCurrency.value?.recentBase ?: "EUR")
+        if (rateDto != null) {
+            rateRepository.deleteAll()
+            rateRepository.insert(*rateDto.asDomainModel().asDatabaseModel().toTypedArray())
+        }
+    }
+
+    private fun showLoading() {
         view.showLoading()
     }
 
-    fun hideLoading() {
+    private fun hideLoading() {
         view.hideLoading()
     }
 

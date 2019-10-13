@@ -14,6 +14,7 @@ import timber.log.Timber
  *@date 2019-10-09
  */
 class BaseApplication : Application(), KodeinAware {
+
     override val kodein: Kodein = Kodein.lazy {
         import(androidXModule(this@BaseApplication))
         import(networkModule)
@@ -29,5 +30,4 @@ class BaseApplication : Application(), KodeinAware {
     private fun setUpTimber() {
         Timber.plant(Timber.DebugTree())
     }
-
 }
