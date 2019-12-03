@@ -1,4 +1,4 @@
-# Revolut
+# Currency
 
 fetch currencies with their rates. Upon row selection, update other rates are simultaneously 
 
